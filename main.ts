@@ -27,7 +27,7 @@ export default class MyPlugin extends Plugin {
 
 		this.addCommand({
 			id: "pickly-page-blend",
-			name: "Publish with Page Blend",
+			name: "Publish with PageBlend",
 			callback: async () => {
 				const file = this.app.workspace.activeEditor?.file
 				if (file) {

@@ -11,6 +11,13 @@ Pickly PageBlend - the easiest way to share your Obsidian notes.
 
 ## Usage
 
+You can publish your notes in several ways:
+
+- Through the file context menu. Open the file context menu and click "Publish with PageBlend."
+- Through a command. To do this, execute the command "Pickly PageBlend: Publish with PageBlend."
+ 
+Wait for the note to be published, after which you will receive a link to the published file.
+
 ![example.gif](./img/example.gif)
 
 ## Installing
@@ -18,6 +25,7 @@ Pickly PageBlend - the easiest way to share your Obsidian notes.
 The plugin is still under approval. Only manual installation available.
 
 ## Manual installation
+
 1. Download the latest release
 2. Extract the `pickly-page-blend` folder from the zip to your vault's plugins folder: <vault>/.obsidian/plugins/
    > Note: On some machines the `.obsidian` folder may be hidden. On MacOS you should be able to press `Command+Shift+Dot` to show the folder in Finder.
