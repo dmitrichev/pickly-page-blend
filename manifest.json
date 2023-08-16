@@ -1,0 +1,11 @@
+{
+	"id": "pickly-page-blend",
+	"name": "Pickly PageBlend",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Publish your Obsidian documents in one click",
+	"author": "Dmitrii Mitrichev at Pickly",
+	"authorUrl": "https://pb.pickly.space",
+	"isDesktopOnly": false,
+	"fundingUrl": "https://ko-fi.com/mitrichev"
+}
