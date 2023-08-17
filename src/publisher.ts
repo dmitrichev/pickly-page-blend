@@ -23,10 +23,6 @@ export class Publisher {
 	}
 
 	async publish(file: TFile, callback: PublishingCallback) {
-		callback({
-			progress: 0,
-			filename: '',
-		})
 		this.files = this.app.vault.getFiles()
 		await this.findFilesForUpload(file)
 		const total = Object.keys(this.filesNeedUpload).length

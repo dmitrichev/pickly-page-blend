@@ -13,30 +13,18 @@ export class PublishingModal extends Modal {
 
 	onOpen() {
 		let { contentEl } = this
+		contentEl.addClass('pickly-modal')
 		contentEl.createEl("h1", { text: "Publishing..." })
-			.setCssStyles({
-				marginBlockStart: '0',
-			})
 
 		this.progress = contentEl.createEl('progress')
 		this.progress.max = 100
-		this.progress.setCssStyles({
-			width: '100%',
-		})
 
-		this.description = contentEl.createEl('p')
-		this.description.setCssStyles({
-			width: '100%',
-		})
+		this.description = contentEl.createEl('p', {text: "Preparing files..."})
 	}
 
 	setProgress(progress: PublishingProgressItem) {
 		this.progress.value = progress.progress
-		if (progress.filename) {
-			this.description.innerText = `Uploading "${progress.filename}"`
-		} else {
-			this.description.innerText = 'Preparing files'
-		}
+		this.description.innerText = `Uploading "${progress.filename}"`
 	}
 
 	setCanClose(val: boolean) {

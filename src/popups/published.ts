@@ -10,20 +10,21 @@ export class PublishSuccessModal extends Modal {
 
 	onOpen() {
 		let { contentEl } = this
-		contentEl.createEl("h1", { text: "The page was published" })
-			.setCssStyles({
-				marginBlockStart: '0',
-			})
+		contentEl.addClass('pickly-modal')
+		contentEl.createEl("h1", { text: "The note was published" })
 
 		contentEl.createEl('input', {value: this.response.url, type: 'text'}, elm => {
 			elm.select()
 		})
-			.setCssStyles({
-				width: '100%',
-				marginBottom: '20px',
-			})
 
 		new Setting(contentEl)
+			.addButton((btn) =>
+				btn
+					.setButtonText("Open")
+					.onClick(async () => {
+						const link = contentEl.createEl('a', {cls: 'hidden', href: this.response.url})
+						link.click()
+					}))
 			.addButton((btn) =>
 				btn
 					.setButtonText("Copy")
@@ -33,7 +34,6 @@ export class PublishSuccessModal extends Modal {
 						new Notice("Link was copied")
 						this.close()
 					}))
-
 	}
 
 	onClose() {

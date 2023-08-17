@@ -1,0 +1,15 @@
+.pickly-modal h1 {
+	margin-block-start: 0;
+}
+
+.pickly-modal input {
+	margin-bottom: 20px;
+}
+
+.pickly-modal .hidden {
+	display: none;
+}
+
+.pickly-modal * {
+	width: 100%;
+}
