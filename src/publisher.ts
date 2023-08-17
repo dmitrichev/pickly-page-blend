@@ -81,7 +81,6 @@ export class Publisher {
 			if (file.extension === 'md') {
 				let data = await this.app.vault.read(file)
 				const inserts = data.match(this.insertRegExp)
-				const promises = []
 				if (inserts) {
 					for (let idx in inserts) {
 						const filename = inserts[idx].startsWith('[[')
@@ -89,7 +88,7 @@ export class Publisher {
 							: inserts[idx].substring(3, inserts[idx].length - 2)
 						const fl = this.findFile(filename)
 						if (fl) {
-							promises.push(this.findFilesForUpload(fl))
+							await this.findFilesForUpload(fl)
 						}
 					}
 				}
@@ -99,11 +98,10 @@ export class Publisher {
 						const filename = links[idx].substring(links[idx].indexOf('(') + 1, links[idx].length - 1)
 						const fl = this.findFile(filename)
 						if (fl) {
-							promises.push(this.findFilesForUpload(fl))
+							await this.findFilesForUpload(fl)
 						}
 					}
 				}
-				await Promise.all(promises)
 			}
 		}
 		return
