@@ -5,7 +5,7 @@ import {v4 as uuidv4} from "uuid"
 import {PublishSuccessModal} from "./src/popups/published";
 import {PublishingModal} from "./src/popups/piblushing";
 
-export default class MyPlugin extends Plugin {
+export default class PicklyPageBlendPlugin extends Plugin {
 	private settings: PicklyPluginSettings
 	private publisher: Publisher
 
