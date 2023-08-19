@@ -1,6 +1,6 @@
 {
 	"name": "pickly-page-blend",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Publish your Obsidian documents in one click",
 	"main": "main.js",
 	"scripts": {

@@ -1,7 +1,6 @@
 import {Editor, MarkdownView, Menu, Notice, Plugin, TAbstractFile, TFile} from 'obsidian'
 import {PicklyPluginSettings, PicklyItem} from './src/types'
 import {Publisher} from "./src/publisher"
-import {v4 as uuidv4} from "uuid"
 import {PublishSuccessModal} from "./src/popups/published";
 import {PublishingModal} from "./src/popups/piblushing";
 
@@ -11,7 +10,6 @@ export default class PicklyPageBlendPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings()
-		await this.install()
 		this.publisher = new Publisher(this.app, this.settings)
 		this.registerEvent(
 			this.app.workspace.on("file-menu", (menu: Menu, file: TAbstractFile) => {
@@ -38,27 +36,16 @@ export default class PicklyPageBlendPlugin extends Plugin {
 			},
 		})
 
-		this.registerEvent(this.app.vault.on('create', file => {
-			this.settings.items.set(file.path, {
-				id: uuidv4()
-			})
-			this.saveSettings()
-		}))
-
 		this.registerEvent(this.app.vault.on('delete', file => {
-			this.settings.items.delete(file.path)
+			this.settings.publishedFiles.delete(file.path)
 			this.saveSettings()
 		}))
 
 		this.registerEvent(this.app.vault.on('rename', (file, oldPath) => {
-			const oldItem = this.settings.items.get(oldPath)
+			const oldItem = this.settings.publishedFiles.get(oldPath)
 			if (oldItem) {
-				this.settings.items.set(file.path, {
+				this.settings.publishedFiles.set(file.path, {
 					id: oldItem.id
-				})
-			} else {
-				this.settings.items.set(file.path, {
-					id: uuidv4()
 				})
 			}
 			this.saveSettings()
@@ -94,41 +81,30 @@ export default class PicklyPageBlendPlugin extends Plugin {
 		} finally {
 			modal.setCanClose(true)
 			modal.close()
+			await this.saveSettings()
 		}
-	}
-
-	async install() {
-		this.app.vault.getFiles().forEach(file => {
-			if (!this.settings.items.has(file.path)) {
-				this.settings.items.set(file.path, {
-					id: uuidv4()
-				})
-			}
-		})
-		await this.saveSettings()
 	}
 
 	async loadSettings() {
 		this.settings = {
-			items: new Map<string, PicklyItem>()
+			publishedFiles: new Map<string, PicklyItem>()
 		}
 		const data = await this.loadData()
-		if (data) {
-			Object.keys(data).forEach(key => {
-				if (!data[key].id) {
-					data[key].id = uuidv4()
+		if (data.publishedFiles) {
+			Object.keys(data.publishedFiles).forEach(key => {
+				if (data.publishedFiles[key].id) {
+					this.settings.publishedFiles.set(key, {
+						id: data.publishedFiles[key].id
+					})
 				}
-				this.settings.items.set(key, {
-					id: data[key].id
-				})
 			})
 		}
 	}
 
 	async saveSettings() {
-		const settings: { [key: string]: PicklyItem } = {}
-		this.settings.items.forEach((val, key) => {
-			settings[key] = val
+		const settings: { publishedFiles: { [key: string]: PicklyItem } } = {publishedFiles: {}}
+		this.settings.publishedFiles.forEach((val, key) => {
+			settings.publishedFiles[key] = val
 		})
 		await this.saveData(settings)
 	}

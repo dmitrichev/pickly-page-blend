@@ -1,5 +1,6 @@
 import {App, TFile} from "obsidian";
 import {PicklyPluginSettings, PublishingCallback, PublishResponse} from "./types";
+import {v4 as uuidv4} from "uuid"
 
 export class Publisher {
 	private readonly apiBaseUrl = 'https://pb.pickly.space/api'
@@ -57,18 +58,21 @@ export class Publisher {
 		const blob = new Blob([fileData], {type: "text/text"})
 		formData.append('title', decodeURI(file.name))
 		formData.append('file', blob)
-		const fileItem = this.settings.items.get(file.path)
-		if (fileItem) {
-			const suffix = file.extension === 'md' ? 'html' : file.extension;
-			formData.append('id', `${fileItem.id}.${suffix}`)
+		let fileItem = this.settings.publishedFiles.get(file.path)
+		if (!fileItem) {
+			fileItem = {
+				id: uuidv4()
+			}
+			this.settings.publishedFiles.set(file.path, fileItem)
 		}
+		const suffix = file.extension === 'md' ? 'html' : file.extension;
+		formData.append('id', `${fileItem.id}.${suffix}`)
 
 		const resp = await fetch(`${this.apiBaseUrl}/publish`, {
 			method: 'POST',
 			body: formData,
 		})
-		const data: PublishResponse = await resp.json()
-		return Promise.resolve(data)
+		return await resp.json()
 	}
 
 	async findFilesForUpload(file: TFile) {
@@ -121,7 +125,7 @@ export class Publisher {
 					: inserts[idx].substring(3, inserts[idx].length - 2)
 				const insertedFile = this.findFile(filename)
 				if (insertedFile) {
-					const fileItem = this.settings.items.get(insertedFile.path)
+					const fileItem = this.settings.publishedFiles.get(insertedFile.path)
 					if (fileItem) {
 						let suffix = insertedFile.extension
 						if (suffix === 'md') {
@@ -150,7 +154,7 @@ export class Publisher {
 				const filename = links[idx].substring(links[idx].indexOf('(') + 1, links[idx].length - 1)
 				const linkedFile = this.findFile(filename)
 				if (linkedFile) {
-					const fileItem = this.settings.items.get(linkedFile.path)
+					const fileItem = this.settings.publishedFiles.get(linkedFile.path)
 					if (fileItem) {
 						let suffix = linkedFile.extension
 						if (suffix === 'md') {

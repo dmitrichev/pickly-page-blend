@@ -8,7 +8,7 @@ export type PicklyItem = {
 }
 
 export interface PicklyPluginSettings {
-	items: Map<string, PicklyItem>
+	publishedFiles: Map<string, PicklyItem>
 }
 
 export type PublishingProgressItem = {
