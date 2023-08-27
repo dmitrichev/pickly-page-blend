@@ -26,6 +26,12 @@ export default class PicklyPageBlendPlugin extends Plugin {
 		this.addCommand({
 			id: "pickly-page-blend",
 			name: "Publish with PageBlend",
+			hotkeys: [
+				{
+					modifiers: ['Mod', 'Shift'],
+					key: 'p',
+				}
+			],
 			callback: async () => {
 				const file = this.app.workspace.activeEditor?.file
 				if (file) {

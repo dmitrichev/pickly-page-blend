@@ -4,21 +4,46 @@ Pickly PageBlend - the easiest way to share your Obsidian notes.
 
 ## Features
 
-- Markdown syntax support
 - Note publication
+- Markdown syntax support
 - Publication of linked notes and files
 - Permanent link to files
+- Beautiful social media previews
 
 ## Usage
 
 You can publish your notes in several ways:
 
+- Just press `Command+Shift+P` (`Ctrl+Shift+P` if you are using Windows/Linux)
 - Through the file context menu. Open the file context menu and click "Publish with PageBlend."
 - Through a command. To do this, execute the command "Pickly PageBlend: Publish with PageBlend."
  
 Wait for the note to be published, after which you will receive a link to the published file.
 
 ![example.gif](./img/example.gif)
+
+## Preview
+
+The preview image of your note will be set to the first image from the note.
+
+If there are no images in your article, an image containing the title of your article will be automatically created. For example: 
+
+![preview-example.png](./img/preview-example.png)
+
+## Meta tags
+
+By default, the note title will be used as the meta tags for your page.
+
+You can change the meta tags by specifying the properties of your note.
+
+```
+---
+pickly_title: Your custom title for <meta property="og:title"> and other.
+pickly_description: Your custom description for <meta name="description"> and other.
+---
+```
+
+The title of the page will always match the title of your note.
 
 ## Installing
 
