@@ -9,6 +9,7 @@ Pickly PageBlend - the easiest way to share your Obsidian notes.
 - Publication of linked notes and files
 - Permanent link to files
 - Beautiful social media previews
+- Create a video from the text of your note and publish it directly on the page (works through [Viqeo.tv Article-to-video player](https://viqeo.tv/article-to-video-player), there is a free plan)
 
 ## Usage
 
@@ -44,6 +45,41 @@ pickly_description: Your custom description for <meta name="description"> and ot
 ```
 
 The title of the page will always match the title of your note.
+
+## Note to video
+
+> **Video is created automatically within 10-15 minutes. After publishing, open your page in a browser, opening the page will start the video creation process.**
+
+Create a video from your note with [Viqeo and Article-To-Video Player](https://viqeo.tv/article-to-video-player).
+
+Example: [https://pb.pickly.space/pages/article-to-video-example.html](https://pb.pickly.space/pages/article-to-video-example.html)
+
+You need:
+1. create an account on [Viqeo.tv](https://studio.viqeo.tv)
+2. Add article-to-video player
+![img.png](./img/viqeo/first.png)
+![img.png](./img/viqeo/second.png)
+3. Customize it
+> **Important! Set the "CSS-Selector of the element" field to** `.container .cover`
+
+![img.png](./img/viqeo/third.png)
+4. Get the player's embed code
+![img.png](./img/viqeo/fourth.png)
+5. Add options to your note properties
+
+```
+pickly_ttv: yes
+viqeo_player_id: 123
+viqeo_profile_id: 321
+```
+
+The `pickly_ttv` field says that you want to generate a video from your note. It should always equal `yes`.
+
+In the `viqeo_player_id` field, enter your player id from the embed code, `data-playerId` field.
+
+In the `viqeo_profile_id` field, enter the profile ID from the embed code, `data-profileId` field.
+
+Publish your note and wait for the video to be created!
 
 ## Installing
 
